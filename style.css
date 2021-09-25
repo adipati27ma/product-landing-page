@@ -3,12 +3,18 @@
   padding: 0;
 }
 
+:root {
+  scroll-behavior: smooth;
+}
+
 body {
   background: #ddd;
   min-height: 100vh;
   font-size: 18px;
   font-family: Oswald, Roboto, Arial, Helvetica, sans-serif;
   margin: 50px;
+  padding-bottom: 100px;
+  padding-top: 25px;
 }
 
 img {
@@ -26,6 +32,17 @@ img {
   display: grid;
   grid-template-columns: 1fr 2fr;
   align-items: center;
+  background-color: rgba(221, 221, 221, 0.6);
+}
+
+/* tambahan paksa "fixed" nav style */
+.menu#nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  padding: 10px;
 }
 
 .menu .brand {
@@ -49,6 +66,11 @@ img {
   font-size: 16px;
   padding: 5px;
   text-transform: uppercase;
+  transition: .5s all;
+}
+
+.menu a:hover {
+  background-color: burlywood;
 }
 
 /* Hamburger Menu */
@@ -59,6 +81,10 @@ img {
   height: 20px;
   /* background-color: black; */
   position: relative;
+
+  /* tambahan paksa "fixed" nav style */
+  top: 15px;
+  right: 25px;
 }
 
 .menu-toggle span {
@@ -116,12 +142,13 @@ span:nth-child(3).slide {
   grid-template-areas:
     'hero hero feature-1'
     'hero hero feature-2';
+  position: relative;
 }
 
 .hero {
   grid-area: hero;
   min-height: 300px;
-  background-image: url(img/hero.png);
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.19931722689075626) 2%, rgba(0, 0, 0, 0) 100%), url(img/hero.png);
   background-size: cover;
   background-position: center;
   padding: 50px;
@@ -129,6 +156,16 @@ span:nth-child(3).slide {
 
 .hero>* {
   display: none;
+}
+
+.hero img#header-img {
+  display: block;
+  position: absolute;
+  background-color: transparent;
+  width: 80px;
+  top: 0;
+  left: 0;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.8));
 }
 
 .features {
@@ -160,7 +197,7 @@ span:nth-child(3).slide {
 
 /* Services */
 .services {
-  order: 3;
+  order: 2;
   display: grid;
   justify-content: center;
   gap: 10px;
@@ -202,11 +239,92 @@ span:nth-child(3).slide {
   grid-column: 1 / -1;
 }
 
+/* -digunakan untuk uji coba gallery "center" */
 /* .gallery-container {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 } */
+
+.video-container {
+  order: 3;
+  margin-top: 50px;
+}
+
+.video {
+  max-width: 600px;
+  margin: auto;
+}
+
+.contact {
+  order: 5;
+  margin: 100px auto;
+  text-align: center;
+}
+
+.contact h2 {
+  margin-bottom: 12px;
+}
+
+.contact input {
+  display: block;
+  margin: auto;
+}
+
+.contact input[type="email"] {
+  width: 500px;
+  padding: 10px;
+  font-size: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  border-radius: 5px;
+}
+
+.contact input[type="submit"] {
+  margin: 10px auto;
+  width: 200px;
+  height: 50px;
+  background-color: #222;
+  color: white;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: .5s all;
+  font-weight: bold;
+}
+
+.contact input[type='submit']:hover {
+  background-color: burlywood;
+}
+
+/* Responsive iframe */
+[style*="--aspect-ratio"]> :first-child {
+  width: 100%;
+}
+
+[style*="--aspect-ratio"]>img {
+  height: auto;
+}
+
+@supports (--custom:property) {
+  [style*="--aspect-ratio"] {
+    position: relative;
+  }
+
+  [style*="--aspect-ratio"]::before {
+    content: "";
+    display: block;
+    padding-bottom: calc(100% / (var(--aspect-ratio)));
+  }
+
+  [style*="--aspect-ratio"]> :first-child {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
+}
+
+/* End */
 
 /* Responsive Breakpoints */
 @media (max-width: 1024px) {
@@ -219,12 +337,24 @@ span:nth-child(3).slide {
     display: none;
   }
 
+  .hero {
+    position: static;
+  }
+
   .hero>* {
     display: block;
     background-color: #222;
     color: #eaeaea;
     padding: 5px;
     margin-bottom: 10px;
+  }
+
+  .hero img#header-img {
+    position: static;
+    top: unset;
+    left: unset;
+    margin-bottom: -10px;
+    margin-left: -12px;
   }
 
   .hero {
@@ -241,7 +371,7 @@ span:nth-child(3).slide {
   }
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
   .menu {
     grid-template-columns: 1fr;
     order: -1;
@@ -285,6 +415,18 @@ span:nth-child(3).slide {
       'hero'
       'feature-1'
       'feature-2';
+
+    /* tambahan paksa "fixed" nav style */
+    margin-top: 10px;
+  }
+
+  /* tambahan paksa "fixed" nav style */
+  .menu-toggle {
+    top: 5px;
+  }
+
+  .contact input[type="email"] {
+    width: 85%;
   }
 }
 
